@@ -17,19 +17,31 @@ public class ReaderActivity extends Activity implements ZXingScannerView.ResultH
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reader);
+        mScannerView = new ZXingScannerView(this);
+        setContentView(mScannerView);
+        //mScannerView.setResultHandler(this);
+        //mScannerView.startCamera();
     }
 
-    public void onClick(View v){
+   /* public void onClick(View v){
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);
         mScannerView.setResultHandler(this);
         mScannerView.startCamera();
+    }*/
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
+        mScannerView.startCamera();          // Start camera on resume
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mScannerView.stopCamera();
+
     }
 
     @Override
