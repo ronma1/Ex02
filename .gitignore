@@ -2,6 +2,9 @@
 *.apk
 *.ap_
 
+# Android studio generation
+.idea/
+
 # Files for the ART/Dalvik VM
 *.dex
 

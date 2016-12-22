@@ -19,16 +19,7 @@ public class ReaderActivity extends Activity implements ZXingScannerView.ResultH
         setContentView(R.layout.activity_reader);
         mScannerView = new ZXingScannerView(this);
         setContentView(mScannerView);
-        //mScannerView.setResultHandler(this);
-        //mScannerView.startCamera();
     }
-
-   /* public void onClick(View v){
-        mScannerView = new ZXingScannerView(this);
-        setContentView(mScannerView);
-        mScannerView.setResultHandler(this);
-        mScannerView.startCamera();
-    }*/
 
     @Override
     public void onResume() {
@@ -41,7 +32,6 @@ public class ReaderActivity extends Activity implements ZXingScannerView.ResultH
     protected void onPause() {
         super.onPause();
         mScannerView.stopCamera();
-
     }
 
     @Override

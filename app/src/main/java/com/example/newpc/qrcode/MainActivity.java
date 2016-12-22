@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(gIntent);
             }
         });
+
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
