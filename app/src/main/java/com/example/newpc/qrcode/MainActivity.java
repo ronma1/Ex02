@@ -7,13 +7,15 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    Button MAP, scan;
+    Button MAP, scan, ble;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MAP = (Button) findViewById(R.id.MAP);
         scan = (Button) findViewById(R.id.scan);
+        ble = (Button) findViewById(R.id.ble);
+
         MAP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -25,6 +27,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent rIntent = new Intent(MainActivity.this, ReaderActivity.class);
+                startActivity(rIntent);
+            }
+        });
+
+        ble.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent rIntent = new Intent(MainActivity.this, BleActivity.class);
                 startActivity(rIntent);
             }
         });
