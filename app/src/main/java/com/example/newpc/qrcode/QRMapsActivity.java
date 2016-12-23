@@ -7,6 +7,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -15,6 +16,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.StringTokenizer;
+
+import static com.example.newpc.qrcode.R.id.map;
 
 
 public class QRMapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -32,7 +35,7 @@ public class QRMapsActivity extends FragmentActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrmaps);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(map);
         mapFragment.getMapAsync(this);
 
         qrLocation = new StringBuffer(); // Extra data from qr activity
@@ -59,6 +62,7 @@ public class QRMapsActivity extends FragmentActivity implements OnMapReadyCallba
 
         mMap.addMarker(new MarkerOptions().position(location).title(myLocationFromQR));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
     }
 

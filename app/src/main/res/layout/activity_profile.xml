@@ -9,39 +9,42 @@
     android:paddingTop="@dimen/activity_vertical_margin">
 
 
-    <LinearLayout
-        android:orientation="vertical"
+    <Button
+        android:text="scan"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_height="wrap_content"
+        android:id="@+id/scan"
+        android:layout_below="@+id/MAP"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
+    <TextView
+        android:text="Welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textViewUserEmail"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/textViewUserEmail"
-            android:layout_gravity="center_horizontal" />
+    <Button
+        android:text="Logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonLogout"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="21dp" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            android:id="@+id/buttonLogout"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:text="MAP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/MAP" />
-
-        <Button
-            android:text="scan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/scan" />
-    </LinearLayout>
+    <Button
+        android:text="MAP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/MAP"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/textViewUserEmail"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

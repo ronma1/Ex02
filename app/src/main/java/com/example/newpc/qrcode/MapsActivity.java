@@ -39,7 +39,6 @@ public class MapsActivity extends AppCompatActivity implements
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     private Marker mCurrLocationMarker;
-    private StringBuffer qrLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
