@@ -20,8 +20,6 @@ public class ReaderActivity extends Activity implements ZXingScannerView.ResultH
     final static String       LocationHandler         = "LocationHandler";
     private final static int  CAMERA_PERMISSION_CODE  = 1;
     private ZXingScannerView  mScannerView;
-    private DatabaseReference dbqr      = FirebaseDatabase.getInstance().getReference();
-    private DatabaseReference dbdata    = dbqr.child("location");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +61,6 @@ public class ReaderActivity extends Activity implements ZXingScannerView.ResultH
     @Override
     public void handleResult(Result result) {
         Log.w("handleResult", "========== location saved ==========");
-        dbdata.setValue(result.getText());
 
         Intent gIntent = new Intent(ReaderActivity.this, QRMapsActivity.class);
         gIntent.putExtra(LocationHandler, result.toString());

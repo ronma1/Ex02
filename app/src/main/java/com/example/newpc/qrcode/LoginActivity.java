@@ -16,22 +16,19 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     //defining views
-    private Button buttonSignIn;
-    private EditText editTextEmail;
-    private EditText editTextPassword;
-    private TextView textViewSignup;
-
-    //firebase auth object
-    private FirebaseAuth firebaseAuth;
-
-    //progress dialog
-    private ProgressDialog progressDialog;
-
+    private Button         buttonSignIn;
+    private EditText       editTextEmail;
+    private EditText       editTextPassword;
+    private TextView       textViewSignup;
+    private FirebaseAuth   firebaseAuth; //firebase auth object
+    private ProgressDialog progressDialog; //progress dialog
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         //getting firebase auth object
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //if the objects getcurrentuser method is not null 
+        //if the objects getCurrentUser method is not null
         //means user is already logged in 
         if(firebaseAuth.getCurrentUser() != null){
             //close this activity
@@ -51,10 +48,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         //initializing views
-        editTextEmail = (EditText) findViewById(R.id.editTextEmail);
+        editTextEmail    = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        buttonSignIn = (Button) findViewById(R.id.buttonSignin);
-        textViewSignup  = (TextView) findViewById(R.id.textViewSignUp);
+        buttonSignIn     = (Button)   findViewById(R.id.buttonSignin);
+        textViewSignup   = (TextView) findViewById(R.id.textViewSignUp);
 
         progressDialog = new ProgressDialog(this);
 

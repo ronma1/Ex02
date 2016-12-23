@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-
+import com.google.firebase.database.DatabaseReference;
 
 
 public class MapsActivity extends AppCompatActivity implements
@@ -33,12 +33,14 @@ public class MapsActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener, View.OnClickListener {
 
-    private GoogleMap mGoogleMap;
-    private SupportMapFragment mapFrag;
-    private LocationRequest mLocationRequest;
-    private GoogleApiClient mGoogleApiClient;
-    private Location mLastLocation;
-    private Marker mCurrLocationMarker;
+    private GoogleMap           mGoogleMap;
+    private SupportMapFragment  mapFrag;
+    private LocationRequest     mLocationRequest;
+    private GoogleApiClient     mGoogleApiClient;
+    private Location            mLastLocation;
+    private Marker              mCurrLocationMarker;
+    public static final int     MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private final static String dbLastGPS = "LastGPS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -121,17 +123,23 @@ public class MapsActivity extends AppCompatActivity implements
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
+        double lat = location.getLatitude();
+        double lng = location.getLongitude();
 
-        //Place current location marker
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        // Place current location marker
+        LatLng latLng = new LatLng(lat, lng);
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
         mCurrLocationMarker = mGoogleMap.addMarker(markerOptions);
+
+        // Add location to DB under users/uid/lastQR
+        DatabaseReference lastQR_ref = ProfileActivity.myUser.child(dbLastGPS);
+        lastQR_ref.setValue(Double.toString(lat) + " " + Double.toString(lng));
     }
 
-    public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+
     private void checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {

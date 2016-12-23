@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
     Button MAP, scan;
@@ -20,6 +22,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private TextView textViewUserEmail;
     private Button buttonLogout;
 
+    private static String UID = null;
+    private DatabaseReference dbUsers   = FirebaseDatabase.getInstance().getReference().child("users");
+    static DatabaseReference myUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
         //displaying logged in user name
         textViewUserEmail.setText(textViewUserEmail.getText() + " " +user.getEmail());
+
+        UID = user.getUid();
+        myUser = dbUsers.child(UID);
 
         //adding listener to button
         buttonLogout.setOnClickListener(this);
@@ -79,4 +87,5 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             startActivity(new Intent(this, LoginActivity.class));
         }
     }
+
 }
