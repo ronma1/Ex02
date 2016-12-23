@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.Result;
@@ -62,7 +65,7 @@ public class ReaderActivity extends Activity implements ZXingScannerView.ResultH
         Log.w("handleResult", "========== location saved ==========");
         dbdata.setValue(result.getText());
 
-        Intent gIntent = new Intent(ReaderActivity.this, MapsActivity.class);
+        Intent gIntent = new Intent(ReaderActivity.this, QRMapsActivity.class);
         gIntent.putExtra(LocationHandler, result.toString());
         startActivity(gIntent);
     }

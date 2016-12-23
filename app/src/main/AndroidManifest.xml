@@ -29,12 +29,11 @@
         </activity>
         <activity
             android:name=".RegistrationActivity"
-            android:label="maps">
-        </activity>
-        <activity android:name=".MapsActivity" />
-        <activity android:name=".ProfileActivity">
-
-        </activity>
+            android:label="maps"></activity>
+        <activity
+            android:name=".MapsActivity"
+            android:label="My Map Activity" />
+        <activity android:name=".ProfileActivity"></activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +41,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".QRMapsActivity"></activity>
     </application>
 
 </manifest>
