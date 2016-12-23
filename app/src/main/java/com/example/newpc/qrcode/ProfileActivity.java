@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
-    Button MAP, scan;
+    Button MAP, scan, ble;
 
     //firebase auth object
     private FirebaseAuth firebaseAuth;
@@ -59,6 +59,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         buttonLogout.setOnClickListener(this);
         MAP = (Button) findViewById(R.id.MAP);
         scan = (Button) findViewById(R.id.scan);
+        ble =(Button) findViewById(R.id.ble);
         MAP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +71,14 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onClick(View view) {
                 Intent rIntent = new Intent(ProfileActivity.this, ReaderActivity.class);
+                startActivity(rIntent);
+            }
+        });
+
+        ble.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent rIntent = new Intent(ProfileActivity.this, BleActivity.class);
                 startActivity(rIntent);
             }
         });

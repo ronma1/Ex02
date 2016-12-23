@@ -6,9 +6,12 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
 
     <application
         android:allowBackup="true"
@@ -42,6 +45,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".QRMapsActivity"></activity>
+        <activity android:name=".BleActivity"></activity>
+        <service
+            android:name=".Ble_Helper.Service_BTLE_GATT"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
