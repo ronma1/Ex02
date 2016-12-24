@@ -137,6 +137,9 @@ public class MapsActivity extends AppCompatActivity implements
         // Add location to DB under users/uid/lastQR
         DatabaseReference lastQR_ref = ProfileActivity.myUser.child(dbLastGPS);
         lastQR_ref.setValue(Double.toString(lat) + " " + Double.toString(lng));
+
+        DatabaseReference locDBlatest = ProfileActivity.myUser.child("LatestLoc");
+        locDBlatest.setValue(Double.toString(lat) + " " + Double.toString(lng));
     }
 
 

@@ -50,6 +50,11 @@ public class GenericMapsActivity extends FragmentActivity implements OnMapReadyC
         locDB.setValue(Double.toString(locationOutSource.latitude) + " " +
                 Double.toString(locationOutSource.longitude));
 
+        DatabaseReference locDBlatest = ProfileActivity.myUser.child("LatestLoc");
+        locDBlatest.setValue(Double.toString(locationOutSource.latitude) + " " +
+                Double.toString(locationOutSource.longitude));
+
+
         mMap.addMarker(new MarkerOptions().position(locationOutSource).title(myLocationFromQR));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(locationOutSource));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(defaultMapZoom));
