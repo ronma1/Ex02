@@ -46,9 +46,9 @@ public class GenericMapsActivity extends FragmentActivity implements OnMapReadyC
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Insert the location to DB under users/uid/lastQR
-        DatabaseReference lastQR_ref = ProfileActivity.myUser.child(bundle.getString(fromActivity));
-        lastQR_ref.setValue(Double.toString(locationOutSource.latitude) + " " +
+        // Insert the location to DB under users/uid/someLastLocation
+        DatabaseReference locDB = ProfileActivity.myUser.child(bundle.getString(fromActivity));
+        locDB.setValue(Double.toString(locationOutSource.latitude) + " " +
                 Double.toString(locationOutSource.longitude));
 
         mMap.addMarker(new MarkerOptions().position(locationOutSource).title(myLocationFromQR));
