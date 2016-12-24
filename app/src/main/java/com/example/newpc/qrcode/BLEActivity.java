@@ -1,6 +1,7 @@
 package com.example.newpc.qrcode;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
@@ -10,6 +11,12 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -21,6 +28,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 public class BLEActivity extends Activity implements BeaconConsumer {
+    private final static String      dbLastBLE = "LastBLE";
     protected static final String    TAG = "BLEActivity";
     protected static final String    noBeaconMsg = "No beacons avalibale yet";
     private static final int         distRow = 2;
@@ -65,6 +73,7 @@ public class BLEActivity extends Activity implements BeaconConsumer {
                 if (beacons.size() > 0) {
                     b = beacons.iterator().next();
                     Log.i(TAG, "The first beacon I see is about "+b.getDistance()+" meters away.");
+                    Log.i(TAG, b.getBluetoothAddress());
                     beaconsMap.put(b.getBluetoothAddress(), b);
 
                     runOnUiThread(new Runnable() {
@@ -137,7 +146,26 @@ public class BLEActivity extends Activity implements BeaconConsumer {
                     toast.show();
                 }
                 else{
-                    // TODO: Add map
+
+                    DatabaseReference bleAdresses = FirebaseDatabase.getInstance().getReference().child("BLE");
+                    bleAdresses.child(nearest.getBluetoothAddress())
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            String location = (String) dataSnapshot.getValue();
+                            if (location == null){
+                                location = GenericMapsActivity.Ariel_University_lat + " " + GenericMapsActivity.Ariel_University_lng;
+                            }
+                            Intent gIntent = new Intent(BLEActivity.this, GenericMapsActivity.class);
+                            gIntent.putExtra(GenericMapsActivity.LocationHandler, location);
+                            gIntent.putExtra(GenericMapsActivity.fromActivity, dbLastBLE);
+                            startActivity(gIntent);
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {  }
+                    });
+
                 }
             }
         });
