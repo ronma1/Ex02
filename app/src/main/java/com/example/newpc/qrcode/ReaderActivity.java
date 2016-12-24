@@ -8,6 +8,11 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.zxing.Result;
 
 import java.util.StringTokenizer;
@@ -61,23 +66,25 @@ public class ReaderActivity extends Activity implements ZXingScannerView.ResultH
     @Override
     public void handleResult(Result result) {
         Log.w("handleResult", "========== location saved ==========");
-        double lat,lng;
-        String send_via_bundle;
-        try {
-            StringTokenizer tokenizer = new StringTokenizer(result.toString(), " ");
-            lat = Double.parseDouble(tokenizer.nextToken());
-            lng = Double.parseDouble(tokenizer.nextToken());
-            send_via_bundle = Double.toString(lat) + " " + Double.toString(lng);
-        }
-        catch (Exception e){
-            Log.w("onMapReady", " Failed parse location from qr - Set location to Ariel");
-            // If parseDouble didn't succeed set default location to Ariel University
-            send_via_bundle = GenericMapsActivity.Ariel_Location;
-        }
+        DatabaseReference qrAdresses = FirebaseDatabase.getInstance().getReference().child("QR");
+        qrAdresses.child(result.toString())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String location = (String) dataSnapshot.getValue();
+                        if (location == null){
+                            location = GenericMapsActivity.Ariel_Location;
+                        }
+                        Intent gIntent = new Intent(ReaderActivity.this, GenericMapsActivity.class);
+                        gIntent.putExtra(GenericMapsActivity.LocationHandler, location);
+                        gIntent.putExtra(GenericMapsActivity.fromActivity, dbLastQR);
+                        startActivity(gIntent);
+                    }
 
-        Intent gIntent = new Intent(ReaderActivity.this, GenericMapsActivity.class);
-        gIntent.putExtra(GenericMapsActivity.LocationHandler, send_via_bundle);
-        gIntent.putExtra(GenericMapsActivity.fromActivity, dbLastQR);
-        startActivity(gIntent);
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {  }
+                });
+
+
     }
 }
