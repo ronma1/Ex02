@@ -154,7 +154,7 @@ public class BLEActivity extends Activity implements BeaconConsumer {
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             String location = (String) dataSnapshot.getValue();
                             if (location == null){
-                                location = GenericMapsActivity.Ariel_University_lat + " " + GenericMapsActivity.Ariel_University_lng;
+                                location = GenericMapsActivity.Ariel_Location;
                             }
                             Intent gIntent = new Intent(BLEActivity.this, GenericMapsActivity.class);
                             gIntent.putExtra(GenericMapsActivity.LocationHandler, location);

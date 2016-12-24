@@ -62,19 +62,19 @@ public class ReaderActivity extends Activity implements ZXingScannerView.ResultH
     public void handleResult(Result result) {
         Log.w("handleResult", "========== location saved ==========");
         double lat,lng;
+        String send_via_bundle;
         try {
             StringTokenizer tokenizer = new StringTokenizer(result.toString(), " ");
             lat = Double.parseDouble(tokenizer.nextToken());
             lng = Double.parseDouble(tokenizer.nextToken());
+            send_via_bundle = Double.toString(lat) + " " + Double.toString(lng);
         }
         catch (Exception e){
             Log.w("onMapReady", " Failed parse location from qr - Set location to Ariel");
             // If parseDouble didn't succeed set default location to Ariel University
-            lat = GenericMapsActivity.Ariel_University_lat;
-            lng = GenericMapsActivity.Ariel_University_lng;
+            send_via_bundle = GenericMapsActivity.Ariel_Location;
         }
 
-        String send_via_bundle = Double.toString(lat) + " " + Double.toString(lng);
         Intent gIntent = new Intent(ReaderActivity.this, GenericMapsActivity.class);
         gIntent.putExtra(GenericMapsActivity.LocationHandler, send_via_bundle);
         gIntent.putExtra(GenericMapsActivity.fromActivity, dbLastQR);

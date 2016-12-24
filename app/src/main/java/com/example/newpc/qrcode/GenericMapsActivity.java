@@ -21,8 +21,7 @@ public class GenericMapsActivity extends FragmentActivity implements OnMapReadyC
 
     final static String         LocationHandler      = "LocationHandler";
     final static String         fromActivity         = "FromActivity";
-    final static double         Ariel_University_lat = 32.104082;
-    final static double         Ariel_University_lng = 35.207815;
+    final static String         Ariel_Location       = "32.104082 35.207815";
 
     private final static String myLocationFromQR     = "Location from QR";
     private final static int    defaultMapZoom       = 15;
