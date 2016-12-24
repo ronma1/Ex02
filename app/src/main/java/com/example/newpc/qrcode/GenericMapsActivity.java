@@ -20,9 +20,10 @@ import static com.example.newpc.qrcode.R.id.map;
 public class GenericMapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     final static String         LocationHandler      = "LocationHandler";
+    final static String         fromActivity         = "FromActivity";
     final static double         Ariel_University_lat = 32.104082;
     final static double         Ariel_University_lng = 35.207815;
-    private final static String dbLastQR             = "LastQR";
+
     private final static String myLocationFromQR     = "Location from QR";
     private final static int    defaultMapZoom       = 15;
     private GoogleMap           mMap;
@@ -46,7 +47,7 @@ public class GenericMapsActivity extends FragmentActivity implements OnMapReadyC
         mMap = googleMap;
 
         // Insert the location to DB under users/uid/lastQR
-        DatabaseReference lastQR_ref = ProfileActivity.myUser.child(dbLastQR);
+        DatabaseReference lastQR_ref = ProfileActivity.myUser.child(bundle.getString(fromActivity));
         lastQR_ref.setValue(Double.toString(locationOutSource.latitude) + " " +
                 Double.toString(locationOutSource.longitude));
 

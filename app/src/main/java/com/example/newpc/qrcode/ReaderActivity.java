@@ -17,8 +17,9 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ReaderActivity extends Activity implements ZXingScannerView.ResultHandler {
 
 
-    private final static int  CAMERA_PERMISSION_CODE  = 1;
-    private ZXingScannerView  mScannerView;
+    private final static int    CAMERA_PERMISSION_CODE  = 1;
+    private final static String dbLastQR                = "LastQR";
+    private ZXingScannerView    mScannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class ReaderActivity extends Activity implements ZXingScannerView.ResultH
         String send_via_bundle = Double.toString(lat) + " " + Double.toString(lng);
         Intent gIntent = new Intent(ReaderActivity.this, GenericMapsActivity.class);
         gIntent.putExtra(GenericMapsActivity.LocationHandler, send_via_bundle);
+        gIntent.putExtra(GenericMapsActivity.fromActivity, dbLastQR);
         startActivity(gIntent);
     }
 }
