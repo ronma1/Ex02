@@ -78,7 +78,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         ble.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent rIntent = new Intent(ProfileActivity.this, RangingActivity.class);
+                Intent rIntent = new Intent(ProfileActivity.this, BLEActivity.class);
                 startActivity(rIntent);
             }
         });

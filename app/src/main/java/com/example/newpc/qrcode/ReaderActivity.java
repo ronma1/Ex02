@@ -8,16 +8,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.Result;
+
+import java.util.StringTokenizer;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class ReaderActivity extends Activity implements ZXingScannerView.ResultHandler {
 
-    final static String       LocationHandler         = "LocationHandler";
+
     private final static int  CAMERA_PERMISSION_CODE  = 1;
     private ZXingScannerView  mScannerView;
 
@@ -61,9 +60,22 @@ public class ReaderActivity extends Activity implements ZXingScannerView.ResultH
     @Override
     public void handleResult(Result result) {
         Log.w("handleResult", "========== location saved ==========");
+        double lat,lng;
+        try {
+            StringTokenizer tokenizer = new StringTokenizer(result.toString(), " ");
+            lat = Double.parseDouble(tokenizer.nextToken());
+            lng = Double.parseDouble(tokenizer.nextToken());
+        }
+        catch (Exception e){
+            Log.w("onMapReady", " Failed parse location from qr - Set location to Ariel");
+            // If parseDouble didn't succeed set default location to Ariel University
+            lat = GenericMapsActivity.Ariel_University_lat;
+            lng = GenericMapsActivity.Ariel_University_lng;
+        }
 
-        Intent gIntent = new Intent(ReaderActivity.this, QRMapsActivity.class);
-        gIntent.putExtra(LocationHandler, result.toString());
+        String send_via_bundle = Double.toString(lat) + " " + Double.toString(lng);
+        Intent gIntent = new Intent(ReaderActivity.this, GenericMapsActivity.class);
+        gIntent.putExtra(GenericMapsActivity.LocationHandler, send_via_bundle);
         startActivity(gIntent);
     }
 }

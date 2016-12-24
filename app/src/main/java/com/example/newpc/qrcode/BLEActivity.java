@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -17,13 +20,16 @@ import org.altbeacon.beacon.Region;
 import java.util.Collection;
 import java.util.HashMap;
 
-public class RangingActivity extends Activity implements BeaconConsumer {
-    protected static final String    TAG = "RangingActivity";
+public class BLEActivity extends Activity implements BeaconConsumer {
+    protected static final String    TAG = "BLEActivity";
+    protected static final String    noBeaconMsg = "No beacons avalibale yet";
     private static final int         distRow = 2;
     private BeaconManager            beaconManager;
     private TableLayout              table;
+    private Button                   ble_loc_btn;
     private Beacon                   b;
     private HashMap<String, Integer> tableContent;
+    private HashMap<String, Beacon>  beaconsMap;
     private int beaconCount = 0;
 
     @Override
@@ -33,8 +39,15 @@ public class RangingActivity extends Activity implements BeaconConsumer {
         beaconManager = BeaconManager.getInstanceForApplication(this);
         beaconManager.bind(this);
         tableContent = new HashMap<>();
-        table = (TableLayout) findViewById(R.id.table_lay);
+        beaconsMap   = new HashMap<>();
+        table        = (TableLayout) findViewById(R.id.table_lay);
+        ble_loc_btn  = (Button) findViewById(R.id.bleLocBTN);
+
+        // sets ble_loc_btn on click action
+        BLEListnerSetter();
+
         updateTable("Address", "Dist (Meter)");
+
     }
 
     @Override
@@ -52,6 +65,8 @@ public class RangingActivity extends Activity implements BeaconConsumer {
                 if (beacons.size() > 0) {
                     b = beacons.iterator().next();
                     Log.i(TAG, "The first beacon I see is about "+b.getDistance()+" meters away.");
+                    beaconsMap.put(b.getBluetoothAddress(), b);
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -98,8 +113,34 @@ public class RangingActivity extends Activity implements BeaconConsumer {
             }
 
         }
-
-        // TODO: ADD FIREBASE CONNECTION ALSO HERE
-
     }
+
+    /**
+     * Sets ble_loc_btn onClick method
+     */
+    public void BLEListnerSetter(){
+        ble_loc_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Beacon nearest = null;
+                double dist = Double.MAX_VALUE;
+                for(String address : beaconsMap.keySet()){
+                    if(beaconsMap.get(address).getDistance() < dist){
+                        nearest = beaconsMap.get(address);
+                        dist = nearest.getDistance();
+                    }
+                }
+
+                if(nearest == null){
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(getApplicationContext(), noBeaconMsg, duration);
+                    toast.show();
+                }
+                else{
+                    // TODO: Add map
+                }
+            }
+        });
+    }
+
 }

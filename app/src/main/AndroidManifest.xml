@@ -44,8 +44,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".QRMapsActivity"></activity>
-        <activity android:name=".RangingActivity"/>
+        <activity android:name=".GenericMapsActivity"></activity>
+        <activity android:name=".BLEActivity"/>
 
     </application>
 
