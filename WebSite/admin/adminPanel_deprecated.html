@@ -1,0 +1,76 @@
+<html>
+
+<head>
+  <title> Welcome </title>
+  <script src="../scripts/jquery.min.js"></script>
+  <script src="../scripts/purl.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+  <script src='../scripts/config.js'></script>
+  <script src='../scripts/adminStuff.js'></script>
+    <script>
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          document.title = document.title + " " + user.displayName;
+        } else {
+          window.location.href = './admin.html';
+        }
+      });
+    </script>
+  <style>
+    table, th, td {
+      border: 1px solid #ccc;
+      border-collapse: collapse;
+      font-size: small;
+      font-family: Georgia; 
+      text-align: left;
+      vertical-align: top;
+      table-layout: fixed;
+      width: 70%; 
+    } 
+    th {
+      background-color: #f7f7f7;
+      padding: 5px;
+      line-height: 2.5em;
+      width: 33%;
+      
+    }
+    .lat{
+      width: 20%;
+    }
+    .lng{
+      width: 20%;
+    }
+    td {
+      padding: 3px;
+      line-height: 1.8em;
+      word-break: unset;
+    }		
+    .typecolumn{
+      font-size:10px;
+    }
+	</style>
+</head>
+
+<body>
+  <button id='getMap'> Watch everyone </button> <br/>
+  <button id='QR'> QR </button> <br/>
+  <button id='BLE'> BLE </button> <br/>
+  <button id='USERS'> USERS </button> <br/>
+
+  <div class= varTable>
+    <table id="params" align='center'>
+	    <thead>
+		    <tr>
+          <th class="tool">Tool</th>
+          <th class="lat">lat</th>
+          <th class="lat">lng</th>
+		    </tr>
+	    </thead>
+	    <tbody id="param-rows"></tbody>
+    </table>
+    
+  </div>
+
+</body>
+
+</html>
