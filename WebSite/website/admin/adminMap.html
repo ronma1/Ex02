@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Where we are? </title>
+    <!-- Fire base integration -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+    <script src='../scripts/config.js'></script>
+    <!-- End fire base integration -->
+
+    <script src='../scripts/googlemaps.admin.js'> </script>
+    <script>
+      var ref = firebase.database().ref('users/');
+      ref.on("value", function(snapshot) {
+        let users = snapshot.val();
+        for(let user in users){
+          let loc = users[user].LatestLoc.split(' ');
+          pos = {
+            lat: parseInt(loc[0]),
+            lng: parseInt(loc[1])
+          };
+          let marker = new google.maps.Marker({
+            position: pos,
+            map: map,
+          });
+          let info = new google.maps.InfoWindow({
+            content: "User uid" + ": " + user
+          });
+          marker.addListener('click', function() {
+            info.open(map, marker);
+          });
+        }
+      }, function (error) {
+      console.log("Error: " + error.code);
+    });
+  </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDeC2arIunh7ka-Kt8j2mAj7HNZiGwhYn0&callback=initMap">
+    </script>
+    
+    <link rel="stylesheet" type="text/css" href="../style/style.css">
+  </head>
+
+  <body>
+    <div id="wrapper">
+      <div id="map"></div>
+      <!-- for elements over the map -->
+      <div id="over_map">
+        <dev id="mini_menu">
+          <button class="button_menu" id="center_me"> Center </button><br/>
+          <button class="button_menu" id="zoom_in"> Zoom in </button><br/>
+          <button class="button_menu" id="zoom_out"> Zoom out </button><br/>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

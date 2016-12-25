@@ -1,0 +1,30 @@
+html, body, #wrapper { 
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#map {
+    width: 100%;
+    height: 100%;
+}
+#over_map {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    z-index: 99;
+}
+#mini_menu {
+    font-size:0.875;
+    word-wrap: break-word;
+    width: 100%;
+    max-width: 100%;
+}
+.button_menu{
+    width: 100px;
+    max-width: 100%;
+    background: rosybrown;
+    border: 1px solid black;
+    margin-top: 5%;
+    margin-left: 2%;
+}
