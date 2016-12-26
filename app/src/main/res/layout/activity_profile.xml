@@ -10,7 +10,7 @@
 
 
     <Button
-        android:text="scan"
+        android:text="QR"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/scan"
@@ -39,7 +39,7 @@
         android:layout_marginBottom="21dp" />
 
     <Button
-        android:text="MAP"
+        android:text="GPS"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/MAP"
