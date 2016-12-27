@@ -1,8 +1,10 @@
-var lastClicked;
+var lastClicked,
+    fb_database = firebase.database(); //firebase db instance
 
 var addParam = (Param) =>{
+  deleteTabaleContent();
   let tbody = $('#param-rows');
-  var ref = firebase.database().ref(Param + '/');
+  var ref = fb_database.ref(Param + '/');
   ref.on("value", function(snapshot) {
     let set = snapshot.val();
     let location;
@@ -35,6 +37,10 @@ var deleteTabaleContent = ()=>{
   }
 }
 
+var setErrorText = (text)=>{
+  $('#error_text').text(text);
+}
+
 // Admin panel buttons
 window.onload = ()=>{
 
@@ -44,33 +50,58 @@ window.onload = ()=>{
   });
   // On BLE button click
   document.getElementById('BLE').addEventListener('click',()=>{
+    setErrorText('');
     lastClicked = 'BLE';
     document.getElementsByClassName('tool')[0].innerText = 'BLE Mac Address'
     $(function() {
-      deleteTabaleContent();
       addParam('BLE');
     });
   });
 
   // On QR button click
   document.getElementById('QR').addEventListener('click',()=>{
+    setErrorText('');
     lastClicked = 'QR';
     document.getElementsByClassName('tool')[0].innerText = 'QR number'
     $(function() {
-      deleteTabaleContent();
       addParam('QR');
     });
   });
 
   // On users click
-  // On QR button click
   document.getElementById('USERS').addEventListener('click',()=>{
+    setErrorText('');
     lastClicked = 'users';
     document.getElementsByClassName('tool')[0].innerText = 'USER uid'
     $(function() {
-      deleteTabaleContent();
       addParam('users');
     });
   });
 
-}
+  // On Add click
+  document.getElementById('add').addEventListener('click',()=>{
+    if(lastClicked == 'users'){
+      $('#id_form').val('');
+      $('#lat_form').val('');
+      $('#lng_form').val('');
+      $('#error_text').text('Adding a new user allowed only via registration!');
+      $('#error_text').css('color', 'red');
+    } else{
+      let id = $('#id_form').val();
+      let lat = $('#lat_form').val();
+      let lng = $('#lng_form').val();
+      
+      fb_database.ref(lastClicked + '/' + id).set(
+      lat + ' ' + lng
+      );
+    
+      addParam(lastClicked);
+      setErrorText('Added new ' + lastClicked + ' succeed!');
+      $('#error_text').css('color', 'black');
+      $('#id_form').val('');
+      $('#lat_form').val('');
+      $('#lng_form').val('');
+    }
+  });
+
+} // End onload

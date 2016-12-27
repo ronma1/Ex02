@@ -6,7 +6,7 @@
   <script src="../scripts/purl.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
   <script src='../scripts/config.js'></script>
-  <script src='../scripts/adminStuff.js'></script>
+  <script type='text/javascript' src='../scripts/adminStuff.js'></script>
     <script>
       firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
@@ -32,8 +32,8 @@
     <link href="css/simple-sidebar.css" rel="stylesheet">
 
   <style>
-  .add_button{
-    margin-top: 200px;
+  .add_form{
+    margin-top: 35px;
     text-align:center;
   }
     .varTable{
@@ -146,6 +146,17 @@
 	    </thead>
 	    <tbody id="param-rows"></tbody>
     </table>
+    <!-- add to db form -->
+    <form class='add_form'>
+      id:<br>
+      <input type="text" id="id_form" placeholder="method identifier"><br>
+      lat:<br>
+      <input type="text" id="lat_form" placeholder="lat coordinate"><br>
+      lng:<br>
+      <input type="text" id="lng_form" placeholder="lng coordinate"><br><br>
+      <button id="add"> Add </button>
+      <p id='error_text'>  </p>
+    </form>
   </div>
   <!-- /#page-content-wrapper -->
 
